@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+	xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<PreferenceCategory
+		android:key="pref_key_transport_network"
+		android:title="@string/pref_transport_network">
+
+		<Preference
+			android:key="pref_key_network"
+			android:summary="@string/pick_network_activity"
+			android:title="@string/network"/>
+
+	</PreferenceCategory>
+
+	<PreferenceCategory
+		android:key="pref_key_directions"
+		android:title="@string/pref_directions_routing">
+
+		<ListPreference
+			android:defaultValue="@string/pref_optimize_value_default"
+			android:entries="@array/pref_optimize_options"
+			android:entryValues="@array/pref_optimize_values"
+			android:key="pref_key_optimize"
+			android:negativeButtonText="@string/cancel"
+			android:summary="%s"
+			android:title="@string/pref_optimize"/>
+
+		<ListPreference
+			android:defaultValue="@string/pref_walk_speed_value_default"
+			android:entries="@array/pref_walk_speed_options"
+			android:entryValues="@array/pref_walk_speed_values"
+			android:key="pref_key_walk_speed"
+			android:negativeButtonText="@string/cancel"
+			android:summary="%s"
+			android:title="@string/pref_walk_speed"/>
+
+	</PreferenceCategory>
+
+	<PreferenceCategory
+		android:key="pref_key_display"
+		android:title="@string/pref_display">
+
+		<ListPreference
+			android:defaultValue="@string/pref_theme_value_light"
+			android:entries="@array/pref_theme_options"
+			android:entryValues="@array/pref_theme_values"
+			android:key="pref_key_theme"
+			android:negativeButtonText="@string/cancel"
+			android:summary="%s"
+			android:title="@string/pref_theme_title"/>
+
+		<ListPreference
+			android:defaultValue="@string/pref_language_value_default"
+			android:entries="@array/pref_language_options"
+			android:entryValues="@array/pref_language_values"
+			android:key="pref_key_language"
+			android:negativeButtonText="@string/cancel"
+			android:summary="%s"
+			android:title="@string/pref_language_title"/>
+
+		<CheckBoxPreference
+			android:defaultValue="true"
+			android:key="pref_key_show_when_locked"
+			android:summary="@string/pref_show_when_locked_title"
+			android:title="@string/pref_show_when_locked_summary"/>
+
+	</PreferenceCategory>
+
+</PreferenceScreen>

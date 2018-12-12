@@ -1,0 +1,173 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'witness'
+apply from: 'witness.gradle'
+
+android {
+
+    compileSdkVersion 27
+    buildToolsVersion "28.0.2"
+
+    defaultConfig {
+        versionCode 111
+        versionName "2.0.2"
+
+        applicationId "de.grobox.liberario"
+        minSdkVersion 15
+        targetSdkVersion 27
+
+        testInstrumentationRunner 'de.grobox.transportr.MockTestRunner'
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
+
+
+        vectorDrawables.useSupportLibrary = true
+
+    }
+
+    buildTypes {
+        release {
+            resValue "string", "app_name", "Transportr"
+            shrinkResources true
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+
+        debug {
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"
+            resValue "string", "app_name", "Transportr Devel"
+//			shrinkResources true
+//			minifyEnabled true
+            shrinkResources false
+            minifyEnabled false
+            multiDexEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            testProguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt', 'proguard-test.txt'
+
+            lintOptions {
+                disable 'ProtectedPermissions'
+            }
+        }
+    }
+
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+
+    dexOptions {
+        preDexLibraries !project.hasProperty('buildServer')
+        javaMaxHeapSize "1g"
+    }
+
+    sourceSets {
+        androidTest {
+            assets.srcDirs += files("$projectDir/schemas".toString())
+        }
+    }
+
+    /*
+	* To sign release build, create file gradle.properties in ~/.gradle/ with this content:
+	*
+	* signingStoreLocation=/home/key.store
+	* signingStorePassword=xxx
+	* signingKeyAlias=alias
+	* signingKeyPassword=xxx
+	*/
+    if (!project.hasProperty('buildServer') && project.hasProperty('signingStoreLocation') && project.hasProperty('signingStorePassword') &&
+            project.hasProperty('signingKeyAlias') && project.hasProperty('signingKeyPassword')) {
+        signingConfigs {
+            release {
+                storeFile file(signingStoreLocation)
+                storePassword signingStorePassword
+                keyAlias signingKeyAlias
+                keyPassword signingKeyPassword
+            }
+        }
+        buildTypes.release.signingConfig = signingConfigs.release
+        buildTypes.debug.signingConfig = signingConfigs.release
+    } else {
+        buildTypes.release.signingConfig = null
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        disable 'MissingTranslation', 'InvalidPackage', 'VectorDrawableCompat'
+    }
+
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+
+    implementation "com.android.support:appcompat-v7:$supportVersion"
+    implementation "com.android.support:design:$supportVersion"
+    implementation "com.android.support:cardview-v7:$supportVersion"
+    implementation "com.android.support:recyclerview-v7:$supportVersion"
+    implementation "com.android.support:preference-v14:$supportVersion"
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+
+    implementation "android.arch.lifecycle:extensions:$lifecycleVersion"
+    implementation "android.arch.lifecycle:common-java8:$lifecycleVersion"
+    implementation "android.arch.persistence.room:runtime:$roomVersion"
+    implementation 'com.android.support:support-v4:27.1.1'
+    implementation 'com.android.support:support-vector-drawable:27.1.1'
+    kapt "android.arch.persistence.room:compiler:$roomVersion"
+
+    implementation 'com.github.omadahealth:swipy:1.2.3'
+    implementation 'de.cketti.library.changelog:ckchangelog:1.2.2'
+    implementation 'com.google.android:flexbox:0.3.2'
+    implementation 'com.mikepenz:materialdrawer:6.0.6'
+    implementation 'com.mikepenz:aboutlibraries:6.0.6'
+    implementation "com.mikepenz:fastadapter:$fastadapterVersion"
+    implementation "com.mikepenz:fastadapter-commons:$fastadapterVersion"
+    implementation "com.mikepenz:fastadapter-extensions-expandable:$fastadapterVersion"
+    implementation 'uk.co.samuelwall:material-tap-target-prompt:2.8.0'
+    implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:5.5.0'
+    implementation 'com.mapbox.mapboxsdk:mapbox-android-plugin-locationlayer:0.4.0'
+    implementation 'com.mapzen.android:lost:3.0.4'
+    // only added because of lint bug Timber 4.6.0
+    implementation 'com.jakewharton.timber:timber:4.7.0'
+
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+
+    implementation('com.gitlab.opentransitmap:public-transport-enabler:3d40bd7c') {
+        exclude module: 'service'
+        exclude group: 'org.json' // provided by Android
+        exclude group: 'net.sf.kxml' // provided by Android
+        exclude group: 'com.google.j2objc'
+        exclude group: 'junit'
+    }
+    debugImplementation 'org.slf4j:slf4j-api:1.7.25'
+    debugImplementation 'com.github.tony19:logback-android:1.1.1-12'
+
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:2.13.0'
+    testImplementation "android.arch.core:core-testing:$lifecycleVersion"
+
+    androidTestImplementation 'com.android.support:multidex:1.0.2'
+    androidTestImplementation("com.android.support.test.espresso:espresso-core:$espressoVersion") {
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.google.code.findbugs'
+    }
+    androidTestImplementation("com.android.support.test.espresso:espresso-contrib:$espressoVersion") {
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude group: 'com.android.support', module: 'design'
+        exclude group: 'com.android.support', module: 'recyclerview-v7'
+        exclude group: 'com.google.code.findbugs'
+    }
+    androidTestImplementation('tools.fastlane:screengrab:1.1.0') {
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.android.support.test.uiautomator'
+        exclude group: 'com.google.code.findbugs'
+    }
+    kaptAndroidTestDebug "com.google.dagger:dagger-compiler:$daggerVersion"
+}

@@ -1,0 +1,91 @@
+<resources>
+
+    <!-- App Theme -->
+
+    <style name="AppBaseTheme" parent="MaterialDrawerTheme">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+		<item name="colorControlNormal">@color/drawableTintDark</item>
+
+        <item name="android:windowAnimationStyle">@style/ActivityAnimation</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="cardBackgroundColor">@color/cardview_dark_background</item>
+        <item name="colorBackgroundFloating">#ff424242</item>
+
+        <item name="android:dialogTheme">@style/DialogTheme</item>
+        <item name="android:alertDialogTheme">@style/DialogTheme</item>
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Dark</item>
+        <item name="mapStyle">@string/mapbox_style_dark</item>
+
+        <item name="about_libraries_card">@color/cardview_dark_background</item>
+        <item name="about_libraries_title_openSource">@color/about_libraries_title_openSource_dark</item>
+        <item name="about_libraries_text_openSource">@color/about_libraries_text_openSource_dark</item>
+    </style>
+
+    <style name="AppBaseTheme.Light" parent="MaterialDrawerTheme.Light.DarkToolbar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+		<item name="colorControlNormal">@color/drawableTintLight</item>
+
+        <item name="android:windowAnimationStyle">@style/ActivityAnimation</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="cardBackgroundColor">@color/cardview_light_background</item>
+        <item name="android:dialogTheme">@style/DialogTheme.Light</item>
+        <item name="android:alertDialogTheme">@style/DialogTheme</item>
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+        <item name="mapStyle">@string/mapbox_style_mapbox_streets</item>
+    </style>
+
+    <style name="AppTheme" parent="AppBaseTheme">
+    </style>
+
+    <style name="AppTheme.Light" parent="AppBaseTheme.Light">
+    </style>
+
+
+    <!-- Dialog Theme -->
+
+    <style name="DialogTheme" parent="Theme.AppCompat.Dialog">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="android:windowAnimationStyle">@style/DialogAnimation</item>
+    </style>
+
+    <style name="DialogTheme.Light" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="android:windowAnimationStyle">@style/DialogAnimation</item>
+    </style>
+
+
+    <!-- Dialog Theme without transparent window -->
+    <style name="SetHomeDialogTheme" parent="Theme.AppCompat.Dialog">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="colorControlNormal">@color/drawableTintDark</item>
+        <item name="android:windowAnimationStyle">@style/DialogAnimation</item>
+    </style>
+
+    <style name="SetHomeDialogTheme.Light" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="colorControlNormal">@color/drawableTintLight</item>
+        <item name="android:windowAnimationStyle">@style/DialogAnimation</item>
+    </style>
+
+    <!-- To make PreferenceCategory's text bold for devices with API <21 -->
+    <style name="Preference_TextAppearanceMaterialBody2">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
+</resources>
